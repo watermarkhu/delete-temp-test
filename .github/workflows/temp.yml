@@ -1,0 +1,36 @@
+name: "Run action.yml on tests in the src folder"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-job:
+    name: Test using MATLAB 2022b
+    runs-on: k8s
+    steps:
+      - run: git --version
+      - run: git lfs --version
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          # sparse-checkout-cone-mode: false
+          # sparse-checkout: |
+          #   '/*'
+          #   '!.lsfconfig'
+
+      - run: git lfs status
+
+      - run: git ls-files
+
+      - run: git lfs ls-files --long
+
+      - run: git lfs fetch --include="*" --exclude="**/.test-artifacts/**"
+
+      - run: git lfs ls-files --long
+
+      - run: git lfs pull --include="test/.test-artifacts/data.zip" --exclude=""
+
+      - run: git lfs ls-files --long
