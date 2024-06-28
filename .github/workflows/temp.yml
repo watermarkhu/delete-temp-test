@@ -8,7 +8,7 @@ on:
 jobs:
   my-job:
     name: Test using MATLAB 2022b
-    runs-on: k8s
+    runs-on: ubuntu-latest
     steps:
       - run: git --version
       - run: git lfs --version
